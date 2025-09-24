@@ -1,0 +1,85 @@
+\documentclass[12pt,a4paper]{article}
+
+% Packages for enhanced formatting and functionality
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{hyperref}
+
+% Bibliography package
+\usepackage{natbib}
+\bibliographystyle{plain}
+
+% Page geometry
+\geometry{margin=1in}
+
+% Title page information
+\title{IM1202 Project Document}
+\author{Student Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This is a sample LaTeX document created for the IM1202 project. It demonstrates the use of LaTeX for academic writing, including proper citation formatting and bibliography management. The document serves as a template for future academic papers and reports.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+LaTeX is a powerful typesetting system that is widely used in academia for producing high-quality documents \cite{lamport1994latex}. This document demonstrates the basic structure of a LaTeX document with proper bibliography integration.
+
+The advantages of using LaTeX include:
+\begin{itemize}
+\item Professional typesetting quality
+\item Excellent handling of mathematical formulas
+\item Automatic cross-referencing and bibliography management
+\item Consistent formatting throughout the document
+\end{itemize}
+
+\section{Methodology}
+
+In academic writing, it is crucial to properly cite sources and maintain a consistent bibliography format. LaTeX provides excellent tools for this purpose through packages like \texttt{natbib} and \texttt{biblatex} \cite{patashnik1988bibtex}.
+
+The workflow for creating documents with LaTeX typically involves:
+\begin{enumerate}
+\item Writing the main document in LaTeX format
+\item Creating a bibliography database (.bib file)
+\item Compiling the document using appropriate LaTeX engines
+\item Generating the final PDF output
+\end{enumerate}
+
+\section{Results and Discussion}
+
+Modern document preparation systems have evolved significantly since the introduction of LaTeX \cite{knuth1986texbook}. The integration of version control systems like Git with LaTeX documents allows for collaborative writing and automatic document generation through continuous integration pipelines.
+
+\subsection{Automated Document Generation}
+
+GitHub Actions provides an excellent platform for automating the compilation of LaTeX documents \cite{github2019actions}. This approach ensures that documents are always up-to-date and can be generated consistently across different environments.
+
+\section{Conclusion}
+
+This document serves as a template for future LaTeX projects in the IM1202 course. The combination of LaTeX for document preparation and GitHub Actions for automated compilation provides a robust workflow for academic writing.
+
+Future work may include exploring advanced LaTeX features such as:
+\begin{itemize}
+\item Complex mathematical typesetting
+\item Advanced table and figure handling
+\item Custom document classes
+\item Integration with reference management tools
+\end{itemize}
+
+% Bibliography
+\bibliography{references}
+
+\end{document}
