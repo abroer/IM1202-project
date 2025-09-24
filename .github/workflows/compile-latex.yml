@@ -1,0 +1,42 @@
+name: Compile LaTeX Document
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  compile-latex:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v3
+      with:
+        root_file: document.tex
+        latexmk_use_xelatex: false
+        latexmk_use_lualatex: false
+        args: -pdf -interaction=nonstopmode -halt-on-error
+        
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: compiled-document
+        path: document.pdf
+        
+    - name: Upload build logs (on failure)
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: latex-logs
+        path: |
+          *.log
+          *.aux
+          *.bbl
+          *.blg
