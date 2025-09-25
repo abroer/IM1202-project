@@ -1,0 +1,22 @@
+
+IPCP contest
+--> De contest met een oplossing (wel in een donut vorm ipv een plat bord)
+
+43-IJAERS-APR-2019-36-TwoClassic.pdf
+--> Probleem opgelost met Clingo
+
+cycle - Removing a1 field from chess board in Clingo knight path program - Stack Overflow
+--> problem mogelijks opgelost met clingo
+
+Knight Graph -- from Wolfram MathWorld
+--> the problem explained
+
+Knights_Tour-simple.ipynb at main · vikthebrik-Knights_Tour
+--> Voorbeeld van oplossing in python (hier kan je er eenvoudig meerdere van vinden)
+
+Knights-Tour-knights_tour.pl at master · bnjbvr-Knights-Tour
+--> oplossing in prolog
+
+https://www.geeksforgeeks.org/dsa/warnsdorffs-algorithm-knights-tour-problem/
+--> Algoritme voor het oplossen van het problem
+
