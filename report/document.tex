@@ -20,8 +20,8 @@
 \geometry{margin=1in}
 
 % Title page information
-\title{IM1202 Project Document}
-\author{Student Name}
+\title{IM1202 Knight Tour Project Report}
+\author{Stijn de Preter (852726504) \\ Arjan Broer (850166428)}
 \date{\today}
 
 \begin{document}
@@ -29,7 +29,7 @@
 \maketitle
 
 \begin{abstract}
-This is a sample LaTeX document created for the IM1202 project. It demonstrates the use of LaTeX for academic writing, including proper citation formatting and bibliography management. The document serves as a template for future academic papers and reports.
+This document presents a comprehensive overview of the research conducted for the IM1202 project. It includes an introduction to the problem, methodology, related work, experiments, results, and conclusions. The focus of the project is on solving the Knight Tour problem using Answer Set Programming (ASP). Key findings and insights are discussed throughout the document.
 \end{abstract}
 
 \tableofcontents
@@ -37,47 +37,33 @@ This is a sample LaTeX document created for the IM1202 project. It demonstrates 
 
 \section{Introduction}
 
-LaTeX is a powerful typesetting system that is widely used in academia for producing high-quality documents \cite{lamport1994latex}. This document demonstrates the basic structure of a LaTeX document with proper bibliography integration.
-
-The advantages of using LaTeX include:
+Describe the Knight Tour problem and the research question here.
+Research questions that we discuss in this report include:
 \begin{itemize}
-\item Professional typesetting quality
-\item Excellent handling of mathematical formulas
-\item Automatic cross-referencing and bibliography management
-\item Consistent formatting throughout the document
+    \item How can the Knight’s Tour problem be logically modeled so that it is solvable with Answer Set Programming (ASP)?
+    \item Which different logical models can be used to formulate the problem?
+    \item How does the size of the chessboard affect the complexity and solution methods?
+    \item How can heuristics and multi-shot solving techniques be applied to improve the efficiency of solving the Knight’s Tour problem with Answer Set Programming (ASP)?
 \end{itemize}
 
 \section{Methodology}
 
-In academic writing, it is crucial to properly cite sources and maintain a consistent bibliography format. LaTeX provides excellent tools for this purpose through packages like \texttt{natbib} and \texttt{biblatex} \cite{patashnik1988bibtex}.
+Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
 
-The workflow for creating documents with LaTeX typically involves:
-\begin{enumerate}
-\item Writing the main document in LaTeX format
-\item Creating a bibliography database (.bib file)
-\item Compiling the document using appropriate LaTeX engines
-\item Generating the final PDF output
-\end{enumerate}
+\section{Related Work}
 
-\section{Results and Discussion}
+Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP). Cite sources appropriately using \cite{lamport1994latex}.
 
-Modern document preparation systems have evolved significantly since the introduction of LaTeX \cite{knuth1986texbook}. The integration of version control systems like Git with LaTeX documents allows for collaborative writing and automatic document generation through continuous integration pipelines.
+\section{Experiments and Results}
 
-\subsection{Automated Document Generation}
+Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
 
-GitHub Actions provides an excellent platform for automating the compilation of LaTeX documents \cite{github2019actions}. This approach ensures that documents are always up-to-date and can be generated consistently across different environments.
+\section{Discussion}
+Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
 
 \section{Conclusion}
 
-This document serves as a template for future LaTeX projects in the IM1202 course. The combination of LaTeX for document preparation and GitHub Actions for automated compilation provides a robust workflow for academic writing.
-
-Future work may include exploring advanced LaTeX features such as:
-\begin{itemize}
-\item Complex mathematical typesetting
-\item Advanced table and figure handling
-\item Custom document classes
-\item Integration with reference management tools
-\end{itemize}
+Summarize the key points of the document and suggest directions for future research.
 
 % Bibliography
 \bibliography{references}
