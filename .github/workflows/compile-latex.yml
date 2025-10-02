@@ -1,12 +1,6 @@
 name: Compile LaTeX Document
 
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  # Allow manual triggering
-  workflow_dispatch:
+on: [push]
 
 jobs:
   compile-latex:
