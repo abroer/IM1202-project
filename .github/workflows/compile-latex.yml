@@ -13,7 +13,8 @@ jobs:
     - name: Compile LaTeX document
       uses: xu-cheng/latex-action@v3
       with:
-        root_file: report/document.tex
+        root_file: document.tex
+        working_directory: report
         latexmk_use_xelatex: false
         latexmk_use_lualatex: false
         args: -pdf -interaction=nonstopmode -halt-on-error
