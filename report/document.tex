@@ -35,9 +35,13 @@ This document presents a comprehensive overview of the research conducted for th
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\section{Introduction}\label{sec:introduction}
 
-Describe the Knight Tour problem and the research question here.
+The Knight’s Tour problem is a classic problem in computer science.
+It involves moving a knight piece on a chessboard such that it visits every square exactly once.
+The challenge lies in the unique movement capabilities of the knight, which moves in an "L" shape:
+    two squares in one direction and then one square perpendicular, or one square in one direction and then two squares perpendicular.
+
 Research questions that we discuss in this report include:
 \begin{itemize}
     \item How can the Knight’s Tour problem be logically modeled so that it is solvable with Answer Set Programming (ASP)?
@@ -46,11 +50,12 @@ Research questions that we discuss in this report include:
     \item How can heuristics and multi-shot solving techniques be applied to improve the efficiency of solving the Knight’s Tour problem with Answer Set Programming (ASP)?
 \end{itemize}
 
-To limit the scope of the project and allow for comparisons, we will focus on finding five results for the problem on a standard board (8x8 squares). We look at Open tours meaning: The knight visits every square exactly once, but the ending square is possibly not a knight's move away from the starting square. If no performance difference is observed, the square can be expanded until a noticeable difference in performance is achieved.
+To limit the scope of the project and allow for comparisons, we will focus on finding five results for the problem on a standard board (8x8 squares).
+We look at Open tours meaning: The knight visits every square exactly once, but the ending square is possibly not a knight's move away from the starting square.
+If no performance difference is observed, the square can be expanded until a noticeable difference in performance is achieved.
 The starting point will also be fixed at a corner of the chessboard.
 
-
-\section{Methodology}
+\section{Methodology}\label{sec:methodology}
 
 Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
 There are several methods to solve this. The following two methods are available (sources still to be found/added):
@@ -58,20 +63,18 @@ Method 1: A sequence is used. This means that we search for the next square of a
 Method 2: "Connected" fields are searched for for all squares. This searches for combinations of all the fields where they are connected.
 Other strategies may also exist.
 
-
-
-\section{Related Work}
+\section{Related Work}\label{sec:related-work}
 
 Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP). Cite sources appropriately using \cite{lamport1994latex}.
 
-\section{Experiments and Results}
+\section{Experiments and Results}\label{sec:experiments-and-results}
 
 Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 Summarize the key points of the document and suggest directions for future research.
 
