@@ -65,7 +65,14 @@ Other strategies may also exist.
 
 \section{Related Work}\label{sec:related-work}
 
-Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP). Cite sources appropriately using \cite{lamport1994latex}.
+Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP).
+Cite sources appropriately using \cite{lamport1994latex}.
+In \cite{parberry1997efficient} the author discusses an efficient algorithm for finding knight's tours on larger chessboard.
+The scalability of the algorithm is proven by showing that boards can be split up in smaller boards.
+Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
+Solving the problem for the smaller board and copying this solution to stitch together the larger board allows for an efficient solution.
+Although this algorithm is efficient, it defies the purpose of this project as it does not use ASP, but actually constructs a solution.
+
 
 A more mathematical analysis of the knight's tour problem can be found in \cite{parberry1997efficient}.
 
