@@ -12,6 +12,23 @@
 \usepackage{url}
 \usepackage{hyperref}
 
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+	language=Python,
+	basicstyle=\ttfamily\small,
+	numbers=left,                % Zet regelnummering aan
+	numberstyle=\tiny\color{black}, % Stijl van de nummers
+	stepnumber=1,                % Nummer elke regel
+	numbersep=5pt,               % Afstand tussen nummer en code
+	backgroundcolor=\color{lightgray!20}, % Achtergrondkleur
+	showstringspaces=false,
+	breaklines=true,
+	frame=single,
+	captionpos=b
+}
+
 % Bibliography package
 \usepackage{natbib}
 \bibliographystyle{plain}
@@ -74,6 +91,62 @@ In \cite{hearn2003complexity}, the complexity of generalized chess problems is d
 \section{Experiments and Results}\label{sec:experiments-and-results}
 
 Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
+
+\subsection{Methods to solve the knight problem}
+
+There are several methods to solve the knight problem. In this section two methods are discussed.
+
+\subsubsection{Method 1}
+
+This approach models the problem as a sequence of steps (or time points). The first step starts at position (x=1,y=1)(x = 1, y = 1)(x=1,y=1). For example, the second step might be at (x=2,y=3)(x = 2, y = 3)(x=2,y=3). Each such combination of coordinates and step number is called a visit: at step zzz, the knight occupies square (x,y)(x, y)(x,y). Finally, a constraint ensures that every square on the board is visited exactly once within a total number of steps equal to the number of squares.
+
+%nog te bekijken of we dit toevoegen als bijlage:
+\begin{lstlisting}[caption={Methode 1}]
+	% Board size
+	#const n = 8.
+	
+	% Board
+	square(1..n, 1..n).
+	
+	% Knight moves
+	move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
+	move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
+	
+	% Steps
+	step(1..n*n).
+	
+	% Initial position at step 1
+	visit(1,1,1).
+	
+	% For each step > 1, the knight must move from the previous square to a new square via a legal knight move.
+	% The choice rule ensures exactly one move is made at each step.
+	{ visit(X2,Y2,Z2) : visit(X1,Y1,Z1), move(X1,Y1,X2,Y2), Z2 = Z1 + 1 } = 1 :- step(Z2), Z2 > 1.
+	
+	% Constraint: no square may be visited more than once.
+	:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
+	
+	
+	#show visit/3.
+\end{lstlisting}
+
+\subsubsection{Method 2}
+
+The second method is based on reachability. For each square on the board, a possible predecessor square is selected (except for the starting square). The final solution only includes configurations that satisfy two conditions:
+- Every square must be reachable from the start (no isolated loops or disconnected regions, such as two squares pointing only to each other).
+- Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
+
+\subsection{Performance of the methods}
+
+Both methods are asked to generate five answers. The first takes 31.880 seconds to do this, while the second method takes 0.342 seconds. To better test the performance of the second model, the second method is asked to provide 10 000 answers, which takes 3.688 seconds.
+
+To better understand performance, we look at the statistics.
+
+\subsubsection{Method 1 - Performance}
+
+\subsubsection{Method 2 - Performance}
+
+
+
 
 \section{Discussion}\label{sec:discussion}
 Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
