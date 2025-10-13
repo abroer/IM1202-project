@@ -41,6 +41,9 @@ The Knight’s Tour problem is a classic problem in computer science.
 It involves moving a knight piece on a chessboard such that it visits every square exactly once.
 The challenge lies in the unique movement capabilities of the knight, which moves in an "L" shape:
     two squares in one direction and then one square perpendicular, or one square in one direction and then two squares perpendicular.
+More formally the knight's tour can be defined as a graph for an $n \times n$ chessboard defined by
+$G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$.
+
 
 Research questions that we discuss in this report include:
 \begin{itemize}
@@ -72,9 +75,10 @@ The scalability of the algorithm is proven by showing that boards can be split u
 Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
 Solving the problem for the smaller board and copying this solution to stitch together the larger board allows for an efficient solution.
 Although this algorithm is efficient, it defies the purpose of this project as it does not use ASP, but actually constructs a solution.
-
-
-A more mathematical analysis of the knight's tour problem can be found in \cite{parberry1997efficient}.
+The article \cite{carvallhotwo} describes the open and closed knight's tour problem and provides a solutions in a CLINGO listings.
+The listing for the open knight's tour problem is designed by defining the $n \times m$ chessboard, the knights possible steps and the constraint of visiting a square only once.
+The solution to be found should be exactly $n \times m$ steps long following the set rules.
+This will guarantee a solution to the open knight's tour problem.
 
 In \cite{hearn2003complexity}, the complexity of generalized chess problems is discussed and imlemented in ASP.
 
