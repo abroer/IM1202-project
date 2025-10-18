@@ -1,3 +1,4 @@
+#const n = 5. % size of the chessboard n x n
 cell(X,Y) :- X = 1..n, Y = 1..n.
 
 % generate knight moves (8 offsets)

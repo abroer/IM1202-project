@@ -30,6 +30,7 @@ def main():
         print(f"\nSolve after step {t}:")
         with prg.solve(yield_=True) as handle:
             found = False
+            print(handle)
             for m in handle:
                 print(m)
                 found = True
