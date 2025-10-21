@@ -74,7 +74,7 @@ The starting point will also be fixed at a corner of the chessboard.
 
 \section{Methodology}\label{sec:methodology}
 
-Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
+%Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
 There are several methods to solve this. The following two methods are available (sources still to be found/added):
 Method 1: A sequence is used. This means that we search for the next square of a chessboard from a specific square.
 Method 2: "Connected" fields are searched for for all squares. This searches for combinations of all the fields where they are connected.
@@ -100,33 +100,32 @@ There are several methods to solve the knight problem. In this section two metho
 
 This approach models the problem as a sequence of steps (or time points). The first step starts at position (x=1,y=1)(x = 1, y = 1)(x=1,y=1). For example, the second step might be at (x=2,y=3)(x = 2, y = 3)(x=2,y=3). Each such combination of coordinates and step number is called a visit: at step zzz, the knight occupies square (x,y)(x, y)(x,y). Finally, a constraint ensures that every square on the board is visited exactly once within a total number of steps equal to the number of squares.
 
-%nog te bekijken of we dit toevoegen als bijlage:
 \begin{lstlisting}[caption={Methode 1}]
-	% Board size
-	#const n = 8.
-	
-	% Board
-	square(1..n, 1..n).
-	
-	% Knight moves
-	move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
-	move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
-	
-	% Steps
-	step(1..n*n).
-	
-	% Initial position at step 1
-	visit(1,1,1).
-	
-	% For each step > 1, the knight must move from the previous square to a new square via a legal knight move.
-	% The choice rule ensures exactly one move is made at each step.
-	{ visit(X2,Y2,Z2) : visit(X1,Y1,Z1), move(X1,Y1,X2,Y2), Z2 = Z1 + 1 } = 1 :- step(Z2), Z2 > 1.
-	
-	% Constraint: no square may be visited more than once.
-	:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
-	
-	
-	#show visit/3.
+% Board size
+#const n = 8.
+
+% Board
+square(1..n, 1..n).
+
+% Knight moves
+move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
+move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
+
+% Steps
+step(1..n*n).
+
+% Initial position at step 1
+visit(1,1,1).
+
+% For each step > 1, the knight must move from the previous square to a new square via a legal knight move.
+% The choice rule ensures exactly one move is made at each step.
+{ visit(X2,Y2,Z2) : visit(X1,Y1,Z1), move(X1,Y1,X2,Y2), Z2 = Z1 + 1 } = 1 :- step(Z2), Z2 > 1.
+
+% Constraint: no square may be visited more than once.
+:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
+
+
+#show visit/3.
 \end{lstlisting}
 
 \subsubsection{Method 2}
@@ -135,17 +134,108 @@ The second method is based on reachability. For each square on the board, a poss
 - Every square must be reachable from the start (no isolated loops or disconnected regions, such as two squares pointing only to each other).
 - Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
 
+\begin{lstlisting}[caption={Methode 2}]
+
+#const n = 8.
+
+% Board
+square(1..n, 1..n).
+
+% Knight moves
+knight_move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
+knight_move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
+
+% Fix starting square
+start(1,1).
+
+% At most one incoming knight move per square except for the start
+1 { route(X1,Y1,X2,Y2) : knight_move(X1,Y1,X2,Y2) } 1 :- square(X2,Y2), not start(X2,Y2).
+
+
+% Each square must be reachable from the start
+reachable(X,Y) :- start(X0,Y0), route(X0,Y0,X,Y).
+reachable(X,Y) :- reachable(X1,Y1), route(X1,Y1,X,Y), not start(X,Y).
+
+% each square must be reachable (start not included)
+:- A < n*n-1, A = #count { X1,Y1 : reachable(X1,Y1) }.
+
+% there must be n*n-1 routes (edges) in total and from each square exactly one outgoing edge
+:- N < n*n-1, N = #count { X1,Y1 : route(X1,Y1,_,_) }.
+
+#show route/4.
+
+\end{lstlisting}
+
+
 \subsection{Performance of the methods}
 
 Both methods are asked to generate five answers. The first takes 31.880 seconds to do this, while the second method takes 0.342 seconds. To better test the performance of the second model, the second method is asked to provide 10 000 answers, which takes 3.688 seconds.
 
 To better understand performance, we look at the statistics.
+Although we cannot find any good documentation of CLINGO's statistics, we can make some assumptions.
+- Choices are the number of branches the algorithm had to make.
+- Conflicts would be the number of times the solver should backtrack.
+
+Method 2 has significantly lower values than method 1, which may also explain the process time.
+
 
 \subsubsection{Method 1 - Performance}
+"choices": 1546701.0
+"conflicts": 370082.0
+
 
 \subsubsection{Method 2 - Performance}
+"choices": 27908.0
+"conflicts": 23864.0
 
 
+\subsection{heuristics}
+Heuristics have been explored to potentially solve the problem faster.
+There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}. 
+This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible. 
+
+The heuristic was implemented in method 1 as follows:
+
+\begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
+	
+% Board size
+#const n = 8.
+
+% Board
+square(1..n, 1..n).
+
+% Knight moves
+move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
+move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
+
+% Steps
+step(1..n*n).
+
+% Initial position at step 1
+visit(1,1,1).
+
+% Define valid target squares for heuristic
+valid_target(X3,Y3,Z3,Z2) :- move(X2,Y2,X3,Y3), visit(X2,Y2,Z2), visit(X3,Y3,Z3), Z3 > Z2.
+heuristic(H,X2,Y2,Z2) :- visit(X2,Y2,Z2), H = #count { X3,Y3 : valid_target(X3,Y3,Z3,Z2)}.
+
+
+% For each step > 1, the knight must move from the previous square to a new square via a legal knight move.
+% The choice rule ensures exactly one move is made at each step.
+{ visit(X2,Y2,Z2) : visit(X1,Y1,Z1), move(X1,Y1,X2,Y2), Z2 = Z1 + 1 } = 1 :- step(Z2), Z2 > 1.
+
+% Constraint: no square may be visited more than once.
+:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
+
+#heuristic visit(X2,Y2,Z2) : heuristic(H,X2,Y2,Z2). [-H@8, true]
+
+#show visit/3.
+
+\end{lstlisting}
+
+The solver takes longer (89.270s) when the heuristic is implemented this way, even though the statistics show less backtracking and fewer choices being reviewed.
+"choices": 579352.0
+"conflicts": 100768.0
+This might be explained by the fact that the heuristic needs to be recalculated repeatedly. As a result, each node will take longer. This leads to a better choice of nodes, but at the cost of additional computations (for the heuristic).
 
 
 \section{Discussion}\label{sec:discussion}
