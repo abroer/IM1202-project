@@ -7,6 +7,46 @@ def extract_positions(model):
 def unique_cells(positions):
     return set((x,y) for (x,y,_) in positions)
 
+def print_solve_statistics(res, ctrl=None):
+    """
+    Print solver statistics if available, otherwise show fallback info.
+    `res` is the clingo SolveResult returned by `handle.get()`.
+    `ctrl` is the clingo Control object (optional).
+    """
+    # Prefer SolveResult.statistics if present
+    if hasattr(res, "statistics"):
+        try:
+            print(res.statistics)
+            return
+        except Exception:
+            pass
+
+    # Avoid using hasattr(ctrl, "statistics") because the property access can raise.
+    if ctrl is not None:
+        try:
+            stats = getattr(ctrl, "statistics")
+        except RuntimeError:
+            # statistics not yet available from Control
+            print("Control.statistics not (yet) available.")
+        except Exception:
+            pass
+        else:
+            print(stats)
+            return
+
+    # fallback: show available attributes and string form
+    print("SolveResult has no 'statistics' attribute on this clingo build or stats unavailable.")
+    attrs = [a for a in dir(res) if not a.startswith("_")]
+    print("Available SolveResult attributes:", attrs)
+    print("SolveResult string representation:")
+    print(res)
+
+# Example usage inside your solve loop:
+# with prg.solve(yield_=True) as handle:
+#     res = handle.get()
+#     print_solve_statistics(res, prg)
+#     for m in handle:
+#         ...
 def main():
     prg = Control()
     prg.load("knight.lp")
@@ -30,9 +70,7 @@ def main():
         print(f"\nSolve after step {t}:")
         with prg.solve(yield_=True) as handle:
             found = False
-            print(handle)
             for m in handle:
-                print(m)
                 found = True
                 pos = extract_positions(m)
                 visited = unique_cells(pos)
@@ -45,6 +83,13 @@ def main():
             if not found:
                 print("No solution at this depth (partial search failed).")
                 return
+
+    prg = Control()
+    prg.load("knight.lp")
+    prg.ground([("base", [])])
+    prg.ground([("step", [Number(25)])])
+    res = prg.solve()
+    print(res)
 
 if __name__ == "__main__":
     main()
