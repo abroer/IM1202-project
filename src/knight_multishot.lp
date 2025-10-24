@@ -40,5 +40,40 @@ visit(4,6,100).
 % Constraint: no square may be visited more than once.
 :- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
 
+#program subboard_multishot(n_subboards, n_steps_per_subboard).
+% Each subboard is of size (n/n_subboards) x (n/n_subboards)
+subsquare_ul_sub(BX, BY, X, Y) :-
+    SubSize = n / n_subboards,
+    XStart = (BX - 1) * SubSize + 1,
+    YStart = (BY - 1) * SubSize + 1,
+    XEnd = BX * SubSize,
+    YEnd = BY * SubSize,
+    X >= XStart, X <= XEnd,
+    Y >= YStart, Y <= YEnd.
+subsquare_ur_sub(BX, BY, X, Y) :-
+    SubSize = n / n_subboards,
+    XStart = BX * SubSize + 1,
+    YStart = (BY - 1) * SubSize + 1,
+    XEnd = (BX + 1) * SubSize,
+    YEnd = BY * SubSize,
+    X >= XStart, X <= XEnd,
+    Y >= YStart, Y <= YEnd.
+subsquare_ll_sub(BX, BY, X, Y) :-
+    SubSize = n / n_subboards,
+    XStart = (BX - 1) * SubSize + 1,
+    YStart = BY * SubSize + 1,
+    XEnd = BX * SubSize,
+    YEnd = (BY + 1) * SubSize,
+    X >= XStart, X <= XEnd,
+    Y >= YStart, Y <= YEnd.
+subsquare_lr_sub(BX, BY, X, Y) :-
+    SubSize = n / n_subboards,
+    XStart = BX * SubSize + 1,
+    YStart = BY * SubSize + 1,
+    XEnd = (BX + 1) * SubSize,
+    YEnd = (BY + 1) * SubSize,
+    X >= XStart, X <= XEnd,
+    Y >= YStart, Y <= YEnd.
+
 
 #show visit/3.
