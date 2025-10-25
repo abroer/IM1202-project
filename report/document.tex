@@ -251,17 +251,20 @@ This might be explained by the fact that the heuristic needs to be recalculated 
 Multi-shot solving was explored to see if it could improve performance.
 The idea behind multi-shot solving is to break the problem into smaller subproblems that can be solved sequentially.
 For the knight's tour, this could involve solving for smaller sections of the board and then combining these solutions.
-This approach is described in detail in \cite{parberry1997efficient}.
+This approach for the Knight's tour problem is described in detail in \cite{parberry1997efficient}.
 The technique of multi-shot solving is described in \cite{DBLP:journals/corr/GebserKKS17}.
 A base program is created that defines the basic rules for the problem to solve.
 Then an additional program is created that adds specific constraints or goals for each subproblem.
 When this approach is applied to the knight's tour problem, the challenge lies in finding and defining appropriate subproblems that can be solved independently while still leading to a valid overall solution.
 Although the performance of solving the smaller subproblems will be faster, the number of found solutions will be less and thus incomplete compared to single shot solving.
 For an implementation example, a board is defined of size $ 10 \times 10 $.
-This board is then split into four $5\times5$ sub-boards.
-The size is chosen because this minimal board size for an open knight's tour is $5\times5$.
+This board is then split into four $5 \times 5$ sub-boards.
+The size is chosen because this minimal board size for an open knight's tour is $5 \times 5$.
 Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \cite{DBLP:journals/corr/GebserKKS17}.
 
+\begin{lstlisting}[caption={Knight's tour multi-shot solving}]
+% Work in progress - multi-shot solving for knight's tour
+\end{lstlisting}
 
 \section{Discussion}\label{sec:discussion}
 Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
