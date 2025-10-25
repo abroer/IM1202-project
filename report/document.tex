@@ -91,7 +91,6 @@ In \cite{parberry1997efficient} the author discusses an efficient algorithm for 
 The scalability of the algorithm is proven by showing that boards can be split up in smaller boards.
 Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
 Solving the problem for the smaller board and copying this solution to stitch together the larger board allows for an efficient solution.
-Although this algorithm is efficient, it defies the purpose of this project as it does not use ASP, but actually constructs a solution.
 The article \cite{carvallhotwo} describes the open and closed knight's tour problem and provides a solutions in a CLINGO listings.
 The listing for the open knight's tour problem is designed by defining the $n \times m$ chessboard, the knights possible steps and the constraint of visiting a square only once.
 The solution to be found should be exactly $n \times m$ steps long following the set rules.
@@ -202,13 +201,13 @@ Method 2 has significantly lower values than method 1, which may also explain th
 
 \subsection{heuristics}
 Heuristics have been explored to potentially solve the problem faster.
-There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}. 
-This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible. 
+There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}.
+This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible.
 
 The heuristic was implemented in method 1 as follows:
 
 \begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
-	
+
 % Board size
 #const n = 8.
 
@@ -248,6 +247,24 @@ The solver takes longer (89.270s) when the heuristic is implemented this way, ev
 "conflicts": 100768.0
 This might be explained by the fact that the heuristic needs to be recalculated repeatedly. As a result, each node will take longer. This leads to a better choice of nodes, but at the cost of additional computations (for the heuristic).
 
+\subsection{Multi shot solving}
+Multi-shot solving was explored to see if it could improve performance.
+The idea behind multi-shot solving is to break the problem into smaller subproblems that can be solved sequentially.
+For the knight's tour, this could involve solving for smaller sections of the board and then combining these solutions.
+This approach for the Knight's tour problem is described in detail in \cite{parberry1997efficient}.
+The technique of multi-shot solving is described in \cite{DBLP:journals/corr/GebserKKS17}.
+A base program is created that defines the basic rules for the problem to solve.
+Then an additional program is created that adds specific constraints or goals for each subproblem.
+When this approach is applied to the knight's tour problem, the challenge lies in finding and defining appropriate subproblems that can be solved independently while still leading to a valid overall solution.
+Although the performance of solving the smaller subproblems will be faster, the number of found solutions will be less and thus incomplete compared to single shot solving.
+For an implementation example, a board is defined of size $ 10 \times 10 $.
+This board is then split into four $5 \times 5$ sub-boards.
+The size is chosen because this minimal board size for an open knight's tour is $5 \times 5$.
+Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \cite{DBLP:journals/corr/GebserKKS17}.
+
+\begin{lstlisting}[caption={Knight's tour multi-shot solving}]
+% Work in progress - multi-shot solving for knight's tour
+\end{lstlisting}
 
 \section{Discussion}\label{sec:discussion}
 Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
