@@ -59,7 +59,7 @@ It involves moving a knight piece on a chessboard such that it visits every squa
 The challenge lies in the unique movement capabilities of the knight, which moves in an "L" shape:
     two squares in one direction and then one square perpendicular, or one square in one direction and then two squares perpendicular.
 More formally the knight's tour can be defined as a graph for an $n \times n$ chessboard defined by
-$G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$.
+$G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$. \cite{parberry1997efficient}
 
 
 Research questions that we discuss in this report include:
@@ -72,21 +72,24 @@ Research questions that we discuss in this report include:
 
 To limit the scope of the project and allow for comparisons, we will focus on finding five results for the problem on a standard board (8x8 squares).
 We look at Open tours meaning: The knight visits every square exactly once, but the ending square is possibly not a knight's move away from the starting square.
-If no performance difference is observed, the square can be expanded until a noticeable difference in performance is achieved.
+If no performance difference is observed, the board can be expanded until a noticeable difference in performance is achieved.
 The starting point will also be fixed at a corner of the chessboard.
 
 \section{Methodology}\label{sec:methodology}
 
 %Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
-There are several methods to solve this. The following two methods are available (sources still to be found/added):
-Method 1: A sequence is used. This means that we search for the next square of a chessboard from a specific square.
-Method 2: "Connected" fields are searched for for all squares. This searches for combinations of all the fields where they are connected.
+There are several methods to solve this problem. The following two methods are available (sources still to be found/added):
+\begin{itemize}
+	\item Method 1: A sequence is used. This means that we search for the next square of a chessboard from a specific square.
+	\item Method 2: "Connected" fields are searched for for all squares. This searches for combinations of all the fields where they are connected.
+\end{itemize}
+
 Other strategies may also exist.
 
 \section{Related Work}\label{sec:related-work}
 
-Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP).
-Cite sources appropriately using \cite{lamport1994latex}.
+%Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP).
+%Cite sources appropriately using \cite{lamport1994latex}.
 In \cite{parberry1997efficient} the author discusses an efficient algorithm for finding knight's tours on larger chessboard.
 The scalability of the algorithm is proven by showing that boards can be split up in smaller boards.
 Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
@@ -100,7 +103,7 @@ Other strategy for having the same rules, but the approach is to provie a rule t
 
 \section{Experiments and Results}\label{sec:experiments-and-results}
 
-Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
+%Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
 
 \subsection{Methods to solve the knight problem}
 
@@ -108,7 +111,7 @@ There are several methods to solve the knight problem. In this section two metho
 
 \subsubsection{Method 1}
 
-This approach models the problem as a sequence of steps (or time points). The first step starts at position (x=1,y=1)(x = 1, y = 1)(x=1,y=1). For example, the second step might be at (x=2,y=3)(x = 2, y = 3)(x=2,y=3). Each such combination of coordinates and step number is called a visit: at step zzz, the knight occupies square (x,y)(x, y)(x,y). Finally, a constraint ensures that every square on the board is visited exactly once within a total number of steps equal to the number of squares.
+This approach models the problem as a sequence of steps (or time points). The first step starts at position (x=1,y=1). The second step might be at (x=2,y=3). Each such combination of coordinates and step number is called a visit: at step "z", the knight occupies square (x,y). Finally, a constraint ensures that every square on the board is visited exactly once within a total number of steps equal to the number of squares.
 
 \begin{lstlisting}[caption={Methode 1}]
 % Board size
@@ -141,8 +144,12 @@ visit(1,1,1).
 \subsubsection{Method 2}
 
 The second method is based on reachability. For each square on the board, a possible predecessor square is selected (except for the starting square). The final solution only includes configurations that satisfy two conditions:
-- Every square must be reachable from the start (no isolated loops or disconnected regions, such as two squares pointing only to each other).
-- Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
+
+\begin{itemize}
+	\item Every square must be reachable from the start (no isolated loops or disconnected regions, such as two squares pointing only to each other).
+	\item Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
+\end{itemize}
+
 
 \begin{lstlisting}[caption={Methode 2}]
 
@@ -183,8 +190,12 @@ Both methods are asked to generate five answers. The first takes 31.880 seconds 
 
 To better understand performance, we look at the statistics.
 Although we cannot find any good documentation of CLINGO's statistics, we can make some assumptions.
-- Choices are the number of branches the algorithm had to make.
-- Conflicts would be the number of times the solver should backtrack.
+
+\begin{itemize}
+	\item Choices are the number of branches the algorithm had to make.
+	\item Conflicts would be the number of times the solver should backtrack.
+\end{itemize}
+
 
 Method 2 has significantly lower values than method 1, which may also explain the process time.
 
@@ -267,11 +278,11 @@ Open knight's tours can only be found on square boards of $n \times n $ with $n 
 \end{lstlisting}
 
 \section{Discussion}\label{sec:discussion}
-Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
+%Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
 
 \section{Conclusion}\label{sec:conclusion}
 
-Summarize the key points of the document and suggest directions for future research.
+%Summarize the key points of the document and suggest directions for future research.
 
 % Bibliography
 \bibliography{references}
