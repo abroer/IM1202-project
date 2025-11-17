@@ -101,6 +101,9 @@ This will guarantee a solution to the open knight's tour problem.
 
 Other strategy for having the same rules, but the approach is to provie a rule that each square is reachable from another square. [Citation needed]
 
+
+%feedback : Related work is besproken, maar het is niet duidelijk hoe de oplossing in het project verschilt van de encodings in de literatuur.
+
 \section{Experiments and Results}\label{sec:experiments-and-results}
 
 %Detail the experiments conducted, the data collected, and the results obtained. Use tables and figures as necessary to illustrate findings.
@@ -150,6 +153,7 @@ The second method is based on reachability. For each square on the board, a poss
 	\item Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
 \end{itemize}
 
+This method differs most from method 1 in that no time/step is kept track of.
 
 \begin{lstlisting}[caption={Methode 2}]
 
@@ -201,11 +205,17 @@ Method 2 has significantly lower values than method 1, which may also explain th
 
 
 \subsubsection{Method 1 - Performance}
+
+%verder uitschrvijen
+
 "choices": 1546701.0
 "conflicts": 370082.0
 
 
 \subsubsection{Method 2 - Performance}
+
+%verder uitschrvijen
+
 "choices": 27908.0
 "conflicts": 23864.0
 
@@ -216,6 +226,8 @@ There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cit
 This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible.
 
 The heuristic was implemented in method 1 as follows:
+
+% feedback:  het niet nodig het hele programma te herhalen
 
 \begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
 
@@ -253,10 +265,20 @@ heuristic(H,X2,Y2,Z2) :- visit(X2,Y2,Z2), H = #count { X3,Y3 : valid_target(X3,Y
 
 \end{lstlisting}
 
+%feedback: De heuristiek in listing 3 kan ook nog beter worden uitgelegd
+
 The solver takes longer (89.270s) when the heuristic is implemented this way, even though the statistics show less backtracking and fewer choices being reviewed.
 "choices": 579352.0
 "conflicts": 100768.0
 This might be explained by the fact that the heuristic needs to be recalculated repeatedly. As a result, each node will take longer. This leads to a better choice of nodes, but at the cost of additional computations (for the heuristic).
+
+
+\subsection{Adding rules for inprovement of the performance}
+
+%Here, we can see how adding rules can affect performance without affecting the final result. (We had two rules that did the same thing; adding both improved performance significantly.)
+
+% we hebben ook nog deze feedback: Sommige aspecten van de onderzoeksvraag (bv. mbt de grootte van het bord) worden nog niet behandeld in het verslag. Zullen we deze onderzoeksvraag vervangen door dit topic?
+
 
 \subsection{Multi shot solving}
 Multi-shot solving was explored to see if it could improve performance.
