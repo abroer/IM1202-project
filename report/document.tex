@@ -206,7 +206,7 @@ Method 2 has significantly lower values than method 1, which may also explain th
 
 \subsubsection{Method 1 - Performance}
 
-%verder uitschrvijen
+%verder uitschrvijen Stijn
 
 "choices": 1546701.0
 "conflicts": 370082.0
@@ -214,7 +214,7 @@ Method 2 has significantly lower values than method 1, which may also explain th
 
 \subsubsection{Method 2 - Performance}
 
-%verder uitschrvijen
+%verder uitschrvijen Stijn
 
 "choices": 27908.0
 "conflicts": 23864.0
@@ -227,7 +227,7 @@ This heuristic should ensure that the algorithm first searches for combinations,
 
 The heuristic was implemented in method 1 as follows:
 
-% feedback:  het niet nodig het hele programma te herhalen
+% feedback:  het niet nodig het hele programma te herhalen - Aanpassen Stijn
 
 \begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
 
@@ -265,7 +265,7 @@ heuristic(H,X2,Y2,Z2) :- visit(X2,Y2,Z2), H = #count { X3,Y3 : valid_target(X3,Y
 
 \end{lstlisting}
 
-%feedback: De heuristiek in listing 3 kan ook nog beter worden uitgelegd
+%feedback: De heuristiek in listing 3 kan ook nog beter worden uitgelegd -Aanpassen Stijn
 
 The solver takes longer (89.270s) when the heuristic is implemented this way, even though the statistics show less backtracking and fewer choices being reviewed.
 "choices": 579352.0
