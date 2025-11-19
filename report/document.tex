@@ -99,7 +99,6 @@ The listing for the open knight's tour problem is designed by defining the $n \t
 The solution to be found should be exactly $n \times m$ steps long following the set rules.
 This will guarantee a solution to the open knight's tour problem.
 
-Other strategy for having the same rules, but the approach is to provie a rule that each square is reachable from another square. [Citation needed]
 
 
 %feedback : Related work is besproken, maar het is niet duidelijk hoe de oplossing in het project verschilt van de encodings in de literatuur.
@@ -153,7 +152,7 @@ The second method is based on reachability. For each square on the board, a poss
 	\item Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
 \end{itemize}
 
-This method differs most from method 1 in that no time/step is kept track of.
+This method differs most from method 1 in that no time/step is kept track of. While method 2 works with the concept of reachability \cite{Liu_2019} .
 
 \begin{lstlisting}[caption={Methode 2}]
 
@@ -200,78 +199,66 @@ Although we cannot find any good documentation of CLINGO's statistics, we can ma
 	\item Conflicts would be the number of times the solver should backtrack.
 \end{itemize}
 
-
+%verplaatsen naar Discussion
 Method 2 has significantly lower values than method 1, which may also explain the process time.
 
 
-\subsubsection{Method 1 - Performance}
+The following results come from the statistics of both methods (see Table~\ref{tab:performance}).
 
-%verder uitschrvijen Stijn
-
-"choices": 1546701.0
-"conflicts": 370082.0
-
-
-\subsubsection{Method 2 - Performance}
-
-%verder uitschrvijen Stijn
-
-"choices": 27908.0
-"conflicts": 23864.0
+\begin{table}[h!]
+	\centering
+	\caption{Performance Comparison of Methods}
+	\label{tab:performance}
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		\textbf{Method} & \textbf{Choices} & \textbf{Conflicts} & \textbf{Time (s)} \\
+		\hline
+		Method 1 & 1{,}546{,}701 & 370{,}082 & 31.880 \\
+		Method 2 & 27{,}908 & 23{,}864 & 0.342 \\
+		\hline
+	\end{tabular}
+\end{table}
 
 
 \subsection{heuristics}
 Heuristics have been explored to potentially solve the problem faster.
 There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}.
-This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible.
+This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible. 
+The algorithm does this by determining the next square based on its accessibility. For example, a square at the edge of the board, and therefore less accessible in the future, will be visited more quickly than a square in the center of the board that can still be reached from multiple squares.
 
 The heuristic was implemented in method 1 as follows:
 
-% feedback:  het niet nodig het hele programma te herhalen - Aanpassen Stijn
 
 \begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
-
-% Board size
-#const n = 8.
-
-% Board
-square(1..n, 1..n).
-
-% Knight moves
-move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 1 = |X1-X2|, 2 = |Y1-Y2|.
-move(X1,Y1,X2,Y2) :- square(X1,Y1), square(X2,Y2), 2 = |X1-X2|, 1 = |Y1-Y2|.
-
-% Steps
-step(1..n*n).
-
-% Initial position at step 1
-visit(1,1,1).
 
 % Define valid target squares for heuristic
 valid_target(X3,Y3,Z3,Z2) :- move(X2,Y2,X3,Y3), visit(X2,Y2,Z2), visit(X3,Y3,Z3), Z3 > Z2.
 heuristic(H,X2,Y2,Z2) :- visit(X2,Y2,Z2), H = #count { X3,Y3 : valid_target(X3,Y3,Z3,Z2)}.
 
-
-% For each step > 1, the knight must move from the previous square to a new square via a legal knight move.
-% The choice rule ensures exactly one move is made at each step.
-{ visit(X2,Y2,Z2) : visit(X1,Y1,Z1), move(X1,Y1,X2,Y2), Z2 = Z1 + 1 } = 1 :- step(Z2), Z2 > 1.
-
-% Constraint: no square may be visited more than once.
-:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
-
 #heuristic visit(X2,Y2,Z2) : heuristic(H,X2,Y2,Z2). [-H@8, true]
-
-#show visit/3.
 
 \end{lstlisting}
 
-%feedback: De heuristiek in listing 3 kan ook nog beter worden uitgelegd -Aanpassen Stijn
+The code above adds to method 1. First, we need to determine how many more steps can be taken from a given field.
+This heuristic will then be used in heuristic directives.
 
-The solver takes longer (89.270s) when the heuristic is implemented this way, even though the statistics show less backtracking and fewer choices being reviewed.
-"choices": 579352.0
-"conflicts": 100768.0
+
+
+The solver takes longer (89.270s) when the heuristic is implemented this way, even though the statistics (see Table~\ref{tab:heuristic}) show less backtracking and fewer choices being reviewed.
 This might be explained by the fact that the heuristic needs to be recalculated repeatedly. As a result, each node will take longer. This leads to a better choice of nodes, but at the cost of additional computations (for the heuristic).
 
+\begin{table}[h!]
+	\centering
+	\caption{Performance with Heuristic Implementation}
+	\label{tab:heuristic}
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		\textbf{Configuration} & \textbf{Choices} & \textbf{Conflicts} & \textbf{Time (s)} \\
+		\hline
+		Heuristic-based & 579{,}352 & 100{,}768 & 89.270 \\
+		\hline
+	\end{tabular}
+\end{table}
 
 \subsection{Adding rules for inprovement of the performance}
 
