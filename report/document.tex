@@ -66,8 +66,9 @@ Research questions that we discuss in this report include:
 \begin{itemize}
     \item How can the Knight’s Tour problem be logically modeled so that it is solvable with Answer Set Programming (ASP)?
     \item Which different logical models can be used to formulate the problem?
-    \item How does the size of the chessboard affect the complexity and solution methods?
+    \item How does the size of the chessboard affect the complexity and solution methods? % Te bekijken om deze vraag er uit te laten?
     \item How can heuristics and multi-shot solving techniques be applied to improve the efficiency of solving the Knight’s Tour problem with Answer Set Programming (ASP)?
+    \item What other technique (other than heuristics or multi-shot solving) can be used to improve the performance of the algorithms?
 \end{itemize}
 
 To limit the scope of the project and allow for comparisons, we will focus on finding five results for the problem on a standard board (8x8 squares).
@@ -115,7 +116,7 @@ There are several methods to solve the knight problem. In this section two metho
 
 This approach models the problem as a sequence of steps (or time points). The first step starts at position (x=1,y=1). The second step might be at (x=2,y=3). Each such combination of coordinates and step number is called a visit: at step "z", the knight occupies square (x,y). Finally, a constraint ensures that every square on the board is visited exactly once within a total number of steps equal to the number of squares.
 
-\begin{lstlisting}[caption={Methode 1}]
+\begin{lstlisting}[caption={Methode 1}, label={lst:methode1}]
 % Board size
 #const n = 8.
 
@@ -154,7 +155,7 @@ The second method is based on reachability. For each square on the board, a poss
 
 This method differs most from method 1 in that no time/step is kept track of. While method 2 works with the concept of reachability \cite{Liu_2019} .
 
-\begin{lstlisting}[caption={Methode 2}]
+\begin{lstlisting}[caption={Methode 2}, label={lst:methode2}]
 
 #const n = 8.
 
@@ -220,7 +221,7 @@ The following results come from the statistics of both methods (see Table~\ref{t
 \end{table}
 
 
-\subsection{heuristics}
+\subsection{Heuristics}
 Heuristics have been explored to potentially solve the problem faster.
 There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}.
 This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible. 
@@ -229,7 +230,7 @@ The algorithm does this by determining the next square based on its accessibilit
 The heuristic was implemented in method 1 as follows:
 
 
-\begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}]
+\begin{lstlisting}[caption={Methode 1 with Warnsdorff's algorithm}, , label={lst:Warnsdorff}]
 
 % Define valid target squares for heuristic
 valid_target(X3,Y3,Z3,Z2) :- move(X2,Y2,X3,Y3), visit(X2,Y2,Z2), visit(X3,Y3,Z3), Z3 > Z2.
@@ -262,10 +263,37 @@ This might be explained by the fact that the heuristic needs to be recalculated 
 
 \subsection{Adding rules for inprovement of the performance}
 
-%Here, we can see how adding rules can affect performance without affecting the final result. (We had two rules that did the same thing; adding both improved performance significantly.)
+In method 1, there are two ways to define that a field may only be accessed once. These are listed in Listing~\ref{lst:methode1option1} and Listing~\ref{lst:methode1option2}.
 
-% we hebben ook nog deze feedback: Sommige aspecten van de onderzoeksvraag (bv. mbt de grootte van het bord) worden nog niet behandeld in het verslag. Zullen we deze onderzoeksvraag vervangen door dit topic?
+\begin{lstlisting}[caption={Methode 1 - Constrain option 1}, label={lst:methode1option1}]
+	:- visit(X,Y,Z1), visit(X,Y,Z2), Z1 != Z2.
+\end{lstlisting}
 
+\begin{lstlisting}[caption={Methode 1 - Constrain option 2}, label={lst:methode1option2}]
+	:- square(X,Y), not visit(X,Y,_).
+\end{lstlisting}
+
+
+The performance of both constraints was also tested. The performance of adding both constraints to the program was also tested. The results are shown in table Table~\ref{tab:method}.
+
+\begin{table}[h!]
+	\centering
+	\caption{Performance with Method Implementation}
+	\label{tab:method}
+	\begin{tabular}{|l|r|r|r|}
+		\hline
+		\textbf{Configuration} & \textbf{Choices} & \textbf{Conflicts} & \textbf{Time (s)} \\
+		\hline
+		Method1 - Option 1 & 1546701 & 370082 & 36.672 \\
+		\hline
+		Method1 - Option 2 & 7505290 & 1024750 & 193.595 \\
+		\hline
+		Method1 - Combined Options & 124376 & 31424 & 1.473 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+Method 1 - Option 1 is the same program as in Listing~\ref{lst:methode1} and therefore also  Table~\ref{tab:performance} . However, we see different values here. This is because this code is run once, and that is the result in the  Table~\ref{tab:performance}. The value can vary from computer to computer and can also change over time. The important thing is that the order of magnitude is considered, rather than the exact result.
 
 \subsection{Multi shot solving}
 Multi-shot solving was explored to see if it could improve performance.
@@ -288,6 +316,33 @@ Open knight's tours can only be found on square boards of $n \times n $ with $n 
 
 \section{Discussion}\label{sec:discussion}
 %Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
+
+%RQ:
+% \item How can the Knight’s Tour problem be logically modeled so that it is solvable with Answer Set Programming (ASP)?
+%\item Which different logical models can be used to formulate the problem?
+%\item How does the size of the chessboard affect the complexity and solution methods?
+%\item How can heuristics and multi-shot solving techniques be applied to improve the efficiency of solving the Knight’s Tour problem with Answer Set Programming (ASP)?
+%\item What other technique (other than heuristics or multi-shot solving) can be used to improve the performance of the algorithms?
+
+\subsection{Methods}
+
+Two different model methods have been found for solving the Knight's Tour problem. Other methods may exist.
+The first method involved maintaining an index to navigate through the steps. The second method relied on reachability.
+The first method (As set out in Listing~\ref{lst:methode1}) was less performing than the second method (As set out in Listing~\ref{lst:methode2}) .
+
+\subsection{Heuristics}
+A heuristic can be applied to method 1. This is according to the Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}. This heuristic itself must be calculated, making solutions easier to find and requiring less backtracking during the solving process. However, the heuristic itself takes a lot of time to calculate. This ultimately leads to a less performant program.
+
+\subsection{Adding rules for inprovement of the performance}
+
+The performance of method 1 (As set out in Listing~\ref{lst:methode1}) is clearly improved by adding the code for Listing~\ref{lst:methode1Option2}, although this doesn't change the program's output. The exact reason is difficult to determine because grounding and solving programs can be very complex. However, presumably, many more choices can be eliminated by the presence of the two rules (they complement each other well), resulting in a very efficient program.
+
+It's also striking to see in Table~\ref{tab:method} that only adding the code of Listing~\ref{lst:methode1Option2} and removing Listing~\ref{lst:methode1Option1} from the code results in a very inefficient program, with many more choices and conflicts .
+
+
+\subsection{Multi shot solving}
+
+%Nog aan te vullen.
 
 \section{Conclusion}\label{sec:conclusion}
 
