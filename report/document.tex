@@ -314,6 +314,25 @@ Open knight's tours can only be found on square boards of $n \times n $ with $n 
 % Work in progress - multi-shot solving for knight's tour
 \end{lstlisting}
 
+\begin{table}[h!]
+	\centering
+	\caption{Performance Comparison with multi-shot solving}
+	\label{tab:multi-shot-performance}
+	\begin{tabular}{|l|r|r|}
+		\hline
+		\textbf{Size} & \textbf{Regular} & \textbf{Multi-shot} \\
+		\hline
+		5x5 & 0.024 & 0.024 \\
+		6x6 & 0.196 & 0.196 \\
+		7x7 & 0.445 & 0.445 \\
+		8x8 & 1.773 & 1.773 \\
+		9x9 & 9.487 & 9.487 \\
+		10x10 & 71.447 & 71.447 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
 \section{Discussion}\label{sec:discussion}
 %Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
 
