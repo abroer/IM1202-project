@@ -16,8 +16,8 @@ with prg.solve(yield_=True) as handle:
 
 # Ground and solve incrementally for steps 1 and 2
 #program sub_knight(x0, y0, size, start_x, start_y, end_x, end_y, offset).
-for t in range(1, 3):
-    prg.ground([("sub_knight", [Number(t)])])
+for t in range(1, 4):
+    prg.ground([("sub_knight", [Number(0), Number(0), Number(5), Number(0), Number(0), Number(4), Number(4), Number(t-1)])])
     print(f"Solve after step {t}:")
     with prg.solve(yield_=True) as handle:
         for model in handle:
