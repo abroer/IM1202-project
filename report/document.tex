@@ -59,7 +59,7 @@ It involves moving a knight piece on a chessboard such that it visits every squa
 The challenge lies in the unique movement capabilities of the knight, which moves in an "L" shape:
     two squares in one direction and then one square perpendicular, or one square in one direction and then two squares perpendicular.
 More formally the knight's tour can be defined as a graph for an $n \times n$ chessboard defined by
-$G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$. \cite{parberry1997efficient}
+$G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$. \citep{parberry1997efficient}
 
 
 Research questions that we discuss in this report include:
@@ -90,12 +90,12 @@ Other strategies may also exist.
 \section{Related Work}\label{sec:related-work}
 
 %Discuss previous research and literature relevant to the Knight Tour problem and Answer Set Programming (ASP).
-%Cite sources appropriately using \cite{lamport1994latex}.
-In \cite{parberry1997efficient} the author discusses an efficient algorithm for finding knight's tours on larger chessboard.
+%Cite sources appropriately using \citep{lamport1994latex}.
+In \citep{parberry1997efficient} the author discusses an efficient algorithm for finding knight's tours on larger chessboard.
 The scalability of the algorithm is proven by showing that boards can be split up in smaller boards.
 Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
 Solving the problem for the smaller board and copying this solution to stitch together the larger board allows for an efficient solution.
-The article \cite{carvallhotwo} describes the open and closed knight's tour problem and provides a solutions in a CLINGO listings.
+The article \citep{carvallhotwo} describes the open and closed knight's tour problem and provides a solutions in a CLINGO listings.
 The listing for the open knight's tour problem is designed by defining the $n \times m$ chessboard, the knights possible steps and the constraint of visiting a square only once.
 The solution to be found should be exactly $n \times m$ steps long following the set rules.
 This will guarantee a solution to the open knight's tour problem.
@@ -153,7 +153,7 @@ The second method is based on reachability. For each square on the board, a poss
 	\item Each square can have at most one outgoing edge, ensuring the structure forms a single continuous path rather than branching.
 \end{itemize}
 
-This method differs most from method 1 in that no time/step is kept track of. While method 2 works with the concept of reachability \cite{Liu_2019} .
+This method differs most from method 1 in that no time/step is kept track of. While method 2 works with the concept of reachability \citep{Liu_2019} .
 
 \begin{lstlisting}[caption={Methode 2}, label={lst:methode2}]
 
@@ -223,7 +223,7 @@ The following results come from the statistics of both methods (see Table~\ref{t
 
 \subsection{Heuristics}
 Heuristics have been explored to potentially solve the problem faster.
-There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}.
+There is a well-known heuristic for the knight tour: Warnsdorff's algorithm \citep{geeksforgeeks_warnsdorff_2025}.
 This heuristic should ensure that the algorithm first searches for combinations, whereby at each step the step is chosen from which the fewest possible future steps are possible. 
 The algorithm does this by determining the next square based on its accessibility. For example, a square at the edge of the board, and therefore less accessible in the future, will be visited more quickly than a square in the center of the board that can still be reached from multiple squares.
 
@@ -299,8 +299,8 @@ Method 1 - Option 1 is the same program as in Listing~\ref{lst:methode1} and the
 Multi-shot solving was explored to see if it could improve performance.
 The idea behind multi-shot solving is to break the problem into smaller subproblems that can be solved sequentially.
 For the knight's tour, this could involve solving for smaller sections of the board and then combining these solutions.
-This approach for the Knight's tour problem is described in detail in \cite{parberry1997efficient}.
-The technique of multi-shot solving is described in \cite{DBLP:journals/corr/GebserKKS17}.
+This approach for the Knight's tour problem is described in detail in \citep{parberry1997efficient}.
+The technique of multi-shot solving is described in \citep{DBLP:journals/corr/GebserKKS17}.
 A base program is created that defines the basic rules for the problem to solve.
 Then an additional program is created that adds specific constraints or goals for each subproblem.
 When this approach is applied to the knight's tour problem, the challenge lies in finding and defining appropriate subproblems that can be solved independently while still leading to a valid overall solution.
@@ -308,7 +308,7 @@ Although the performance of solving the smaller subproblems will be faster, the 
 For an implementation example, a board is defined of size $ 10 \times 10 $.
 This board is then split into four $5 \times 5$ sub-boards.
 The size is chosen because this minimal board size for an open knight's tour is $5 \times 5$.
-Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \cite{parberry1997efficient}.
+Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \citep{parberry1997efficient}.
 
 \begin{lstlisting}[caption={Knight's tour multi-shot solving}]
 % Work in progress - multi-shot solving for knight's tour
@@ -350,7 +350,7 @@ The first method involved maintaining an index to navigate through the steps. Th
 The first method (As set out in Listing~\ref{lst:methode1}) was less performing than the second method (As set out in Listing~\ref{lst:methode2}) .
 
 \subsection{Heuristics}
-A heuristic can be applied to method 1. This is according to the Warnsdorff's algorithm \cite{geeksforgeeks_warnsdorff_2025}. This heuristic itself must be calculated, making solutions easier to find and requiring less backtracking during the solving process. However, the heuristic itself takes a lot of time to calculate. This ultimately leads to a less performant program.
+A heuristic can be applied to method 1. This is according to the Warnsdorff's algorithm \citep{geeksforgeeks_warnsdorff_2025}. This heuristic itself must be calculated, making solutions easier to find and requiring less backtracking during the solving process. However, the heuristic itself takes a lot of time to calculate. This ultimately leads to a less performant program.
 
 \subsection{Adding rules for inprovement of the performance}
 
