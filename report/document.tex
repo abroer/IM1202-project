@@ -64,16 +64,15 @@ More formally the knight's tour can be defined as a graph for an $n \times n$ ch
 $G = (V, E)$ where $V = {(i,j)|1 \leq i,j \leq n}$ and $E = {((i,j),(k,l))|{|i-k|},{|j-l|}={1,2}}$. \citep{parberry1997efficient}
 
 
-Research questions that we discuss in this report include:
+Research questions that we discuss in this report are:
 \begin{itemize}
     \item How can the Knight’s Tour problem be logically modeled so that it is solvable with Answer Set Programming (ASP)?
     \item Which different logical models can be used to formulate the problem?
-    \item How does the size of the chessboard affect the complexity and solution methods? % Te bekijken om deze vraag er uit te laten?
     \item How can heuristics be applied to improve the efficiency of solving the Knight’s Tour problem with Answer Set Programming (ASP)?
     \item What other technique (other than heuristics) can be used to improve the performance of the algorithms?
 \end{itemize}
 
-To limit the scope of the project and allow for comparisons, we will focus on finding results for the problem on a standard board (8x8 squares).
+To limit the scope of the project and allow for comparisons, we will focus on finding five results for the problem on a standard board (8x8 squares).
 We look at Open tours meaning: The knight visits every square exactly once, but the ending square is possibly not a knight's move away from the starting square.
 If no performance difference is observed, the board can be expanded until a noticeable difference in performance is achieved.
 The starting point will also be fixed at a corner of the chessboard.
@@ -82,7 +81,7 @@ The starting point will also be fixed at a corner of the chessboard.
 
 %Describe the methods used to address the research questions, including any algorithms, tools, or frameworks employed.
 There are several methods to solve this problem.
-The following two methods are available (sources still to be found/added):
+The following two methods are available:
 \begin{itemize}
 	\item Method 1: A sequence is used.
         This means that we search for the next square of a chessboard from a specific square.
@@ -90,7 +89,7 @@ The following two methods are available (sources still to be found/added):
         This searches for combinations of all the fields where they are connected.
 \end{itemize}
 
-Other strategies may also exist.
+Other methods may also exist.
 
 \section{Related Work}\label{sec:related-work}
 
@@ -99,7 +98,9 @@ Other strategies may also exist.
 In \citep{parberry1997efficient} the author discusses an efficient algorithm for finding knight's tours on larger chessboard.
 The scalability of the algorithm is proven by showing that boards can be split up in smaller boards.
 Following a structure of knight steps in the corners creates a structure that enables the boards to be connected.
-Solving the problem for the smaller board and copying this solution to stitch together the larger board allows for an efficient solution.
+Solving the problem for the smaller boards and copying this solution to stitch together the larger board allows for an efficient solution.
+This algorithm goes beyond the scope of this project because this report limits the board size to $8 \times 8$.
+The algorithm is interesting for future research on larger boards.
 The article \citep{carvallhotwo} describes the open and closed knight's tour problem and provides a solutions in a CLINGO listings.
 The listing for the open knight's tour problem is designed by defining the $n \times m$ chessboard, the knights possible steps and the constraint of visiting a square only once.
 The solution to be found should be exactly $n \times m$ steps long following the set rules.
@@ -213,10 +214,6 @@ Although we cannot find any good documentation of CLINGO's statistics, we can ma
 	\item Conflicts would be the number of times the solver should backtrack.
 \end{itemize}
 
-%verplaatsen naar Discussion
-Method 2 has significantly lower values than method 1, which may also explain the process time.
-
-
 The following results come from the statistics of both methods (see Table~\ref{tab:performance}).
 
 \begin{table}[h!]
@@ -317,44 +314,6 @@ This is because this code is run once, and that is the result in the Table~\ref{
 The value can vary from computer to computer and can also change over time.
 The important thing is that the order of magnitude is considered, rather than the exact result.
 
-\subsection{Multi shot solving}\label{subsec:multi-shot-solving}
-Multi-shot solving was explored to see if it could improve performance.
-The idea behind multi-shot solving is to break the problem into smaller subproblems that can be solved sequentially.
-For the knight's tour, this could involve solving for smaller sections of the board and then combining these solutions.
-This approach for the Knight's tour problem is described in detail in \citep{parberry1997efficient}.
-The technique of multi-shot solving is described in \citep{DBLP:journals/corr/GebserKKS17}.
-A base program is created that defines the basic rules for the problem to solve.
-Then an additional program is created that adds specific constraints or goals for each subproblem.
-When this approach is applied to the knight's tour problem, the challenge lies in finding and defining appropriate subproblems that can be solved independently while still leading to a valid overall solution.
-Although the performance of solving the smaller subproblems will be faster, the number of found solutions will be less and thus incomplete compared to single shot solving.
-For an implementation example, a board is defined of size $ 10 \times 10 $.
-This board is then split into four $5 \times 5$ sub-boards.
-The size is chosen because this minimal board size for an open knight's tour is $5 \times 5$.
-Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \citep{parberry1997efficient}.
-
-\begin{lstlisting}[caption={Knight's tour multi-shot solving},label={lst:lstlisting}]
-% Work in progress - multi-shot solving for knight's tour
-\end{lstlisting}
-
-\begin{table}[h!]
-	\centering
-	\caption{Performance Comparison with multi-shot solving}
-	\label{tab:multi-shot-performance}
-	\begin{tabular}{|l|r|r|}
-		\hline
-		\textbf{Size} & \textbf{Regular} & \textbf{Multi-shot} \\
-		\hline
-		5x5 & 0.024 & 0.024 \\
-		6x6 & 0.196 & 0.196 \\
-		7x7 & 0.445 & 0.445 \\
-		8x8 & 1.773 & 1.773 \\
-		9x9 & 9.487 & 9.487 \\
-		10x10 & 71.447 & 71.447 \\
-		\hline
-	\end{tabular}
-\end{table}
-
-
 \section{Discussion}\label{sec:discussion}
 %Interpret the results in the context of the research questions. Discuss any limitations and potential implications of the findings.
 
@@ -371,7 +330,9 @@ Two different model methods have been found for solving the Knight's Tour proble
 Other methods may exist.
 The first method involved maintaining an index to navigate through the steps.
 The second method relied on reachability.
-The first method (As set out in Listing~\ref{lst:methode1}) was less performing than the second method (As set out in Listing~\ref{lst:methode2}) .
+The first method (As set out in Listing~\ref{lst:methode1}) was less performing than the second method (As set out in Listing~\ref{lst:methode2}).
+The difference in performance can be explained by the number of choices and conflicts that arise during the solving process.
+Method 2 showed a significantly lower number of choices and conflicts compared to Method 1.
 
 \subsection{Heuristics}\label{subsec:disc-heuristics}
 A heuristic can be applied to method 1.
@@ -388,10 +349,39 @@ However, presumably, many more choices can be eliminated by the presence of the 
 
 It's also striking to see in Table~\ref{tab:method} that only adding the code of Listing~\ref{lst:methode1option2} and removing Listing~\ref{lst:methode1option1} from the code results in a very inefficient program, with many more choices and conflicts .
 
+\subsection{Multi shot solving}\label{subsec:multi-shot-solving}
+Multi-shot solving was explored to see if it could improve performance.
+The idea behind multi-shot solving is to break the problem into smaller subproblems that can be solved sequentially.
+For the knight's tour, this could involve solving for smaller sections of the board and then combining these solutions.
+This approach for the Knight's tour problem is described in detail in \citep{parberry1997efficient}.
+The technique of multi-shot solving is described in \citep{DBLP:journals/corr/GebserKKS17}.
+A base program is created that defines the basic rules for the problem to solve.
+Then an additional program is created that adds specific constraints or goals for each subproblem.
+When this approach is applied to the knight's tour problem, the challenge lies in finding and defining appropriate subproblems that can be solved independently while still leading to a valid overall solution.
+Although the performance of solving the smaller subproblems will be faster, the number of found solutions will be less and thus incomplete compared to single shot solving.
+For an implementation example, a board is defined of size $ 10 \times 10 $.
+This board is then split into four $5 \times 5$ sub-boards.
+The size is chosen because this minimal board size for an open knight's tour is $5 \times 5$.
+Open knight's tours can only be found on square boards of $n \times n $ with $n \geq 5$ as described in \citep{parberry1997efficient}.
+
 
 \section{Conclusion}\label{sec:conclusion}
-
 %Summarize the key points of the document and suggest directions for future research.
+The Knight’s Tour problem can be effectively modeled using Answer Set Programming (ASP) through different logical models.
+Two distinct methods were explored: one based on sequential steps and another based on reachability.
+The reachability-based method demonstrated superior performance, likely due to its reduced number of choices and conflicts during the solving process.
+These choices and conflicts are critical factors influencing the efficiency of ASP solvers.
+
+Heuristics, such as Warnsdorff's algorithm, can be integrated into the ASP models to guide the search process.
+However, while heuristics can reduce backtracking and improve the quality of choices, they may introduce additional computational overhead, potentially leading to longer overall solving times.
+The researched methods in this report showed a significant preformance decrease when heuristics were applied due to the additional calculations needed.
+
+Multi-shot solving was found as related word to this project, but was not implemented due to time constraints.
+The technique holds promise for breaking down the Knight's Tour problem into smaller, more manageable subproblems, which could enhance solving efficiency in future research.
+This technique could be particularly beneficial for larger chessboards, where the complexity of the problem increases significantly.
+For smaller boards this method can not be applied because a board has a minimum size of $5 \times 5$ to find an open knight's tour.
+Consequence of applying multi-shot solving on smaller boards would be that not all solutions are found.
+The path of the knight is limited by the sub-board solutions and thus can not explore all possible paths.
 
 % Bibliography
 \bibliography{references}
