@@ -203,7 +203,7 @@ reachable(X,Y) :- reachable(X1,Y1), route(X1,Y1,X,Y), not start(X,Y).
 \subsection{Performance of the methods}\label{subsec:performance-of-the-methods}
 
 Both methods are asked to generate five answers.
-The first takes 31.880 seconds to do this, while the second method takes 0.342 seconds.
+The first method takes 31.880 seconds to do this, while the second method takes 0.342 seconds.
 To better test the performance of the second model, the second method is asked to provide 10000 answers, which takes 3.688 seconds.
 
 To better understand performance, we look at the statistics.
@@ -287,9 +287,9 @@ These are listed in Listing~\ref{lst:methode1option1} and Listing~\ref{lst:metho
 \end{lstlisting}
 
 
-The performance of both constraints was also tested.
+The performance of both constraints was tested.
 The performance of adding both constraints to the program was also tested.
-The results are shown in Table~\ref{tab:method}.
+All the results are shown in Table~\ref{tab:method}.
 
 \begin{table}[h!]
 	\centering
@@ -299,16 +299,16 @@ The results are shown in Table~\ref{tab:method}.
 		\hline
 		\textbf{Configuration} & \textbf{Choices} & \textbf{Conflicts} & \textbf{Time (s)} \\
 		\hline
-		Method1 - Option 1 & 1546701 & 370082 & 36.672 \\
+		Method1 - Option 1 & 1,546,701 & 370,082 & 36.672 \\
 		\hline
-		Method1 - Option 2 & 7505290 & 1024750 & 193.595 \\
+		Method1 - Option 2 & 7,505,290 & 1,024,750 & 193.595 \\
 		\hline
-		Method1 - Combined Options & 124376 & 31424 & 1.473 \\
+		Method1 - Combined Options & 124,376 & 31,424 & 1.473 \\
 		\hline
 	\end{tabular}
 \end{table}
 
-Method 1 - Option 1 is the same program as in Listing~\ref{lst:methode1} and therefore also Table~\ref{tab:performance}.
+"Method 1 - Option 1" is the same program as in Listing~\ref{lst:methode1} and therefore also Table~\ref{tab:performance}.
 However, we see different values here.
 This is because this code is run once, and that is the result in Table~\ref{tab:performance}.
 The value can vary from computer to computer and can also change over time.
